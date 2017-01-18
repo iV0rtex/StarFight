@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.starfight.controlEnemy.ControlEnemy;
 import com.starfight.gameObject.PlayerShip;
 import com.starfight.gameObject.StaticAttack;
@@ -38,6 +39,8 @@ public class GameRander {
         for (EnemyV1 enemy : listEnemies){
             this.shapeRenderer.setColor(0.21568628F, 0.3137255F, 0.39215687F, 1.0F);
             this.shapeRenderer.rect(enemy.position.x,enemy.position.y,enemy.getOption("width"),enemy.getOption("height"));
+            Rectangle healthBody = enemy.getHealthBody().getBody();
+            this.shapeRenderer.rect(healthBody.getX(),healthBody.getY(),healthBody.getWidth(),healthBody.getHeight());
         }
         this.shapeRenderer.end();
 

@@ -16,4 +16,10 @@ public class StaticAttack extends FhightObject{
     public void attack() {
 
     }
+
+    @Override
+    public void setAllOptions() {
+
+    }
+
 }

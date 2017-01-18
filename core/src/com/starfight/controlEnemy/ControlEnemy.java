@@ -45,22 +45,26 @@ public class ControlEnemy {
             int sizeAttack = listAttack.size();
             for(int j = 0; j < sizeAttack;j++){
                 if(ControlCollision.collision(enemy,listAttack.get(j))){
+                    enemy.setDamage(listAttack.get(j).getToDamage());
+                    if(enemy.getObjectStatus() == false){
+                        removeEnemy = true;
+                    }
                     listAttack.remove(j);
                     //j--;
                     //sizeAttack--;
-                    removeEnemy = true;
                     break;
                 }
             }
-            if(enemy.position.y <-10){//TODO: Temporarily, this remove object will be relative to the object width
+            if((enemy.position.y+enemy.getOption("height")) < 0){
                 removeEnemy = true;
             }
+
+
             if(removeEnemy){
                 listEnemies.remove(i);
                 i--;
                 size--;
             }
-
         }
     }
     static private class ControlCollision{

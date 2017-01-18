@@ -23,9 +23,9 @@ public class PlayerShip extends FhightObject{
     public void update(float delta) {
         this.position.add(this.velocity.cpy().scl(delta));
 
-        if(rout.equals("right") && position.x >= nextPosit){
+        if(rout.equals("right") && (position.x + (this.option.get("width")/2)) >= nextPosit){
             velocity.x = 0;
-        }else if(rout.equals("left") && position.x <= nextPosit){
+        }else if(rout.equals("left") && (position.x + (this.option.get("width")/2)) <= nextPosit){
             velocity.x = 0;
         }
 
@@ -51,6 +51,13 @@ public class PlayerShip extends FhightObject{
             timeAttack = 0;
         }
     }
+
+    @Override
+    public void setAllOptions() {
+
+    }
+
+
     public ArrayList getListAttack(){
         return attacks;
     }
