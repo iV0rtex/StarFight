@@ -39,7 +39,9 @@ public class InputHandler implements InputProcessor{
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
+        world.touch(scaleX(screenX),1);
+
+        return true;
     }
 
     @Override
