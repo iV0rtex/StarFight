@@ -1,11 +1,6 @@
 package com.starfight.healthObject;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-
-import java.util.Hashtable;
-import java.util.Map;
 
 public class HealthObjects {
     private Rectangle body;
@@ -25,6 +20,9 @@ public class HealthObjects {
     }
     public void setHealth(int health){
         this.maxHealth = health;
+    }
+    public int getHealth(){
+        return this.maxHealth;
     }
     public Rectangle getBody(){
         return body;

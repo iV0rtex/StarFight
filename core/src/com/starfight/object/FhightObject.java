@@ -20,6 +20,7 @@ public abstract class FhightObject implements FhightInterface{
     protected boolean status;
     protected int damage;
     protected HealthObjects healthBody;
+    private boolean registeredBodyHealth = false;
     protected FhightObject(){
         option = new Hashtable<String, Integer>();
         body = new Rectangle();
@@ -44,6 +45,9 @@ public abstract class FhightObject implements FhightInterface{
     public void update(float delta) {
         this.position.add(this.staticVelocity.cpy().scl(delta));
         body.set(position.x,position.y,(float) getOption("width"),(float) getOption("height"));
+        if(registeredBodyHealth){
+            healthBody.setPosit(position.x,position.y+option.get("height")+2);
+        }
     }
     public void setHealth(int val){
         this.health += val;
@@ -51,6 +55,10 @@ public abstract class FhightObject implements FhightInterface{
             this.die();
         }else if(!this.getObjectStatus() && this.health >0){
             this.reanimate();
+        }
+        if(registeredBodyHealth){
+            float sWidth = healthBody.getBody().width*(((float)((100 -Math.abs(val) * 100 / healthBody.getHealth())))/100.0f);
+            healthBody.setWidthHeight(sWidth,2);
         }
     }
     public int getHealth(){
@@ -70,5 +78,16 @@ public abstract class FhightObject implements FhightInterface{
     }
     public void reanimate(){
         status = true;
+    }
+    public boolean registerBodyHealth(int staticHealth,float width,float health){
+        healthBody.setHealth(staticHealth);
+        healthBody.setWidthHeight(width,health);
+        registeredBodyHealth = true;
+        return registeredBodyHealth;
+    }
+    public boolean registerBodyHealth(int staticHealth){
+        healthBody.setHealth(staticHealth);
+        registeredBodyHealth = true;
+        return registeredBodyHealth;
     }
 }
