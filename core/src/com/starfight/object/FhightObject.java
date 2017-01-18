@@ -26,7 +26,6 @@ public abstract class FhightObject implements FhightInterface{
         position = new Vector2();
         velocity = new Vector2();
         staticVelocity = new Vector2();
-        health = 2;
         healthBody = new HealthObjects();
         status = true;
 
