@@ -18,7 +18,8 @@ public abstract class FhightObject implements FhightInterface{
     protected float timeAttack = 0;
     protected int health;
     protected boolean status;
-    protected int damage;
+    protected static final int staticDamage = -1;
+    protected int scalarDamage = 1;
     protected HealthObjects healthBody;
     private boolean registeredBodyHealth = false;
     protected FhightObject(){
@@ -27,10 +28,7 @@ public abstract class FhightObject implements FhightInterface{
         position = new Vector2();
         velocity = new Vector2();
         staticVelocity = new Vector2();
-        healthBody = new HealthObjects();
         status = true;
-
-        damage = -1;
     }
     public int getOption(String key){
         if(option.containsKey(key)) {
@@ -74,12 +72,13 @@ public abstract class FhightObject implements FhightInterface{
         return status;
     }
     public int getToDamage(){
-        return damage;
+        return (staticDamage * scalarDamage);
     }
     public void reanimate(){
         status = true;
     }
     public boolean registerBodyHealth(int staticHealth,float width,float health){
+        healthBody = new HealthObjects();
         healthBody.setHealth(staticHealth);
         healthBody.setWidthHeight(width,health);
         registeredBodyHealth = true;
@@ -89,5 +88,8 @@ public abstract class FhightObject implements FhightInterface{
         healthBody.setHealth(staticHealth);
         registeredBodyHealth = true;
         return registeredBodyHealth;
+    }
+    public void setScalarDamage(int d){
+        this.scalarDamage = d;
     }
 }

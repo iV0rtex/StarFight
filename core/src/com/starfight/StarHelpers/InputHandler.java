@@ -1,14 +1,21 @@
 package com.starfight.StarHelpers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 import com.starfight.world.GameWorld;
 
 public class InputHandler implements InputProcessor{
     private GameWorld world;
     private float scaleFactorX;
-    public InputHandler(GameWorld world,float scaleFactorX){
+    OrthographicCamera cam;
+    Vector3 touchPos;
+    public InputHandler(GameWorld world, float scaleFactorX, OrthographicCamera cam){
         this.world = world;
         this.scaleFactorX = scaleFactorX;
+        this.cam = cam;
+        touchPos = new Vector3();
     }
     @Override
     public boolean keyDown(int keycode) {
@@ -27,19 +34,27 @@ public class InputHandler implements InputProcessor{
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        world.touch(scaleX(screenX),1);
+        touchPos.set(screenX,screenY,(float)0);
+        cam.unproject(touchPos);
+        world.touch(touchPos.x,1);
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        world.touch(scaleX(screenX),0);
+        touchPos.set(screenX,screenY,(float)0);
+
+        cam.unproject(touchPos);
+        world.touch(touchPos.x,0);
+
         return true;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        world.touch(scaleX(screenX),1);
+        touchPos.set(screenX,screenY,(float)0);
+       cam.unproject(touchPos);
+        world.touch(touchPos.x,1);
 
         return true;
     }
@@ -53,7 +68,7 @@ public class InputHandler implements InputProcessor{
     public boolean scrolled(int amount) {
         return false;
     }
-    private int scaleX(int screenX) {
-        return (int) (screenX / this.scaleFactorX);
+    private float scaleX(float screenX) {
+        return (float) (screenX / this.scaleFactorX);
     }
 }

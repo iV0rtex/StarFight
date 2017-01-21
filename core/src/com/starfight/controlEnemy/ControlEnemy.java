@@ -1,5 +1,6 @@
 package com.starfight.controlEnemy;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Intersector;
 import com.starfight.gameObject.PlayerShip;
 import com.starfight.gameObject.StaticAttack;
@@ -11,22 +12,28 @@ import java.util.ArrayList;
 public class ControlEnemy {
     private ArrayList<EnemyV1> listEnemies;
     private PlayerShip player;
-    public ControlEnemy(PlayerShip player){
+    private int gameWidth;
+    private int gameHeight;
+    public ControlEnemy(PlayerShip player,float gameWidth,float gameHeight){
         int count = 3;
         listEnemies = new ArrayList<EnemyV1>();
-        int nextPositX = 10;
+        int nextPositX = (int)(gameWidth*0.10);
         for(int i = 0; i <count; i++){
-            listEnemies.add(i, new EnemyV1(nextPositX,190));
-            nextPositX += 30;
+            listEnemies.add(i, new EnemyV1(nextPositX,(int)gameHeight,(int)gameWidth,(int)gameHeight));
+            EnemyV1 lastAdded = listEnemies.get(i);
+            nextPositX = (int)(lastAdded.position.x + lastAdded.getOption("width") + (gameWidth*0.35));
         }
+        this.gameWidth = (int)gameWidth;
+        this.gameHeight = (int)gameHeight;
         this.player = player;
     }
     private void temporalityFunction(){//TODO: Delete this function after testing;
         int count = 3;
-        int nextPositX = 10;
+        int nextPositX = (int)(gameWidth*0.10);
         for(int i = 0; i <count; i++){
-            listEnemies.add(i, new EnemyV1(nextPositX,190));
-            nextPositX += 30;
+            listEnemies.add(i, new EnemyV1(nextPositX,this.gameHeight,this.gameWidth,this.gameHeight));
+            EnemyV1 lastAdded = listEnemies.get(i);
+            nextPositX = (int)(lastAdded.position.x + lastAdded.getOption("width") + (gameWidth*0.35));
         }
     }
     public ArrayList getListEnemies(){
@@ -54,11 +61,17 @@ public class ControlEnemy {
                     //sizeAttack--;
                     break;
                 }
+
             }
             if((enemy.position.y+enemy.getOption("height")) < 0){
                 removeEnemy = true;
             }
+            if(ControlCollision.collision(enemy,player)){
+                player.setDamage(enemy.getToDamage());
+                enemy.die();
+                removeEnemy = true;
 
+            }
 
             if(removeEnemy){
                 listEnemies.remove(i);
@@ -69,7 +82,12 @@ public class ControlEnemy {
     }
     static private class ControlCollision{
         static private boolean collision (FhightObject obj1, FhightObject obj2){
-            return Intersector.overlaps(obj1.body,obj2.body);
+            if(obj1.position.y < obj2.position.y && obj1.position.y+obj1.getOption("height") > obj2.position.y){
+                return Intersector.overlaps(obj1.body,obj2.body);
+            }else{
+                return false;
+            }
+
         }
 
     }
