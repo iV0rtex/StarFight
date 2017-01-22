@@ -1,6 +1,5 @@
 package com.starfight.object;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.starfight.healthObject.HealthObjects;
@@ -9,18 +8,19 @@ import com.starfight.object.objInterface.FhightInterface;
 import java.util.Hashtable;
 import java.util.Map;
 
-
+//TODO: In a future need rewrite this class, and all his heirs, perhaps; This is mess;
 public abstract class FhightObject implements FhightInterface{
     protected Map<String,Integer> option;
     public Vector2 position,velocity,staticVelocity;
     public Rectangle body;
     protected int speedAttack;
-    protected float timeAttack = 0;
+    protected float timeAttack;
     protected int health;
     protected boolean status;
     protected static final int staticDamage = -1;
     protected int scalarDamage = 1;
     protected HealthObjects healthBody;
+    protected boolean dropResources = false;
     private boolean registeredBodyHealth = false;
     protected FhightObject(){
         option = new Hashtable<String, Integer>();
@@ -84,11 +84,7 @@ public abstract class FhightObject implements FhightInterface{
         registeredBodyHealth = true;
         return registeredBodyHealth;
     }
-    public boolean registerBodyHealth(int staticHealth){
-        healthBody.setHealth(staticHealth);
-        registeredBodyHealth = true;
-        return registeredBodyHealth;
-    }
+
     public void setScalarDamage(int d){
         this.scalarDamage = d;
     }

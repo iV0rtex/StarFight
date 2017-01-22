@@ -4,12 +4,14 @@ package com.starfight.gameObject;
 import com.starfight.object.FhightObject;
 
 public class StaticAttack extends FhightObject{
+    private int gameWidth;
+    private int gameHeight;
     StaticAttack(float x, float y,int gameWidth,int gameHeight){
-        option.put("width",(int)(gameWidth*0.01f));
-        option.put("height",(int)(option.get("width")*2));
+        this.gameWidth = gameWidth;
+        this.gameHeight = gameHeight;
         body.set( x, y,(float) getOption("width"),(float) getOption("height"));
-        position.add(x - (this.getOption("width")/2.0f),y);
-        staticVelocity.add(0,(int)(gameHeight*0.3f));
+        position.set(x - (this.getOption("width")/2.0f),y);
+        this.setAllOptions(1);
     }
 
     @Override
@@ -19,7 +21,10 @@ public class StaticAttack extends FhightObject{
 
     @Override
     public void setAllOptions(int health) {
-
+        this.health = health;
+        option.put("width",(int)(gameWidth*0.01f));
+        option.put("height",(int)(option.get("width")*2));
+        staticVelocity.add(0,(int)(gameHeight*0.3f));
     }
 
 }

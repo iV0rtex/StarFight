@@ -38,6 +38,7 @@ public class GameRander {
         this.cam = cam;
         this.assets = assets;
         batch = new SpriteBatch();
+        this.batch.setProjectionMatrix(this.cam.combined);
         positionBG = new Vector2();
         velocityBG = new Vector2();
         positionBG.set(0f,0f);
@@ -50,20 +51,15 @@ public class GameRander {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //this.cam.update();
         batch.begin();
+        this.batch.disableBlending();
         this.renderBG(delta);
-
-
-
+        this.batch.enableBlending();
         if(ship.getObjectStatus()){
-            //this.shapeRenderer.setColor(0.21568628F, 0.3137255F, 0.39215687F, 1.0F);
-            //this.shapeRenderer.rect(ship.position.x,ship.position.y,ship.getOption("width"),ship.getOption("height"));
             Texture userplain = assets.get("data/userplain.png");
             batch.draw(userplain,ship.position.x,ship.position.y,ship.getOption("width"),ship.getOption("height"));
         }
         ArrayList<EnemyV1> listEnemies = enemies.getListEnemies();
         for (EnemyV1 enemy : listEnemies){
-            //this.shapeRenderer.setColor(0.21568628F, 0.3137255F, 0.39215687F, 1.0F);
-            //this.shapeRenderer.rect(enemy.position.x,enemy.position.y,enemy.getOption("width"),enemy.getOption("height"));
             batch.draw(assets.enemyplain,enemy.position.x,enemy.position.y,enemy.getOption("width"),enemy.getOption("height"));
         }
         batch.end();
@@ -94,10 +90,5 @@ public class GameRander {
         }
         batch.draw(bg,0f,positionBG.y,this.gameWidth,this.gameHeight);
         batch.draw(bg,0f,positionBG.y+this.gameHeight,this.gameWidth,this.gameHeight);
-
-
-
-
-
     }
 }

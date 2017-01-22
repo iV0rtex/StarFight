@@ -11,18 +11,12 @@ public class PlayerShip extends FhightObject{
     private float nextPosit = 0;
     private int gameWidth;
     private int gameHeight;
+    private int midPointX;
     public PlayerShip(int midPointX,float gameWidth,float gameHeight) {
-        this.setAllOptions(4);
-        rout = "noOne";
-        option.put("width",(int)(gameWidth*0.07f));
-        option.put("height",(int)(option.get("width")*1.5f));
-        body.set((midPointX - (this.getOption("width")/2.0f)),3f,(float) getOption("width"),(float) getOption("height"));
-        position.add((midPointX - (this.getOption("width")/2.0f)),3f);
-        attacks = new ArrayList<StaticAttack>();
-        speedAttack = 1;
-        staticVelocity.add(gameWidth*0.5f,0);
+        this.midPointX = midPointX;
         this.gameWidth = (int)gameWidth;
         this.gameHeight = (int)gameHeight;
+        this.setAllOptions(4);
     }
 
     @Override
@@ -61,6 +55,14 @@ public class PlayerShip extends FhightObject{
     @Override
     public void setAllOptions(int health) {
         this.health = health;
+        rout = "noOne";
+        option.put("width",(int)(gameWidth*0.11f));
+        option.put("height",(int)(option.get("width")*1.4f));
+        body.set((midPointX - (this.getOption("width")/2.0f)),3f,(float) getOption("width"),(float) getOption("height"));
+        position.add((midPointX - (this.getOption("width")/2.0f)),3f);
+        attacks = new ArrayList<StaticAttack>();
+        speedAttack = 1;
+        staticVelocity.add(gameWidth*0.5f,0);
     }
 
 
@@ -70,16 +72,17 @@ public class PlayerShip extends FhightObject{
 
     public void touch(float x,int upOrDown){
         if(upOrDown == 1){
-            if(position.x < x){
-                velocity.x = staticVelocity.x;
-                rout = "right";
-            }else if(position.x > x){
-                velocity.x = -staticVelocity.x;
-                rout = "left";
-            }else{
-                velocity.x = 0;
+            float scalPosit = position.x+(this.getOption("width")/2.0f);
+            if(velocity.x == 0){
+                if(x > position.x+this.getOption("width")){
+                    velocity.x = staticVelocity.x;
+                    rout = "right";
+                }else if(x<position.x){
+                    velocity.x = -staticVelocity.x;
+                    rout = "left";
+                }
+                nextPosit = x;
             }
-            nextPosit = x;
         }else{
             velocity.x = 0;
             rout = "noOne";
