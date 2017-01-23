@@ -26,6 +26,7 @@ public class EnemyV1 extends FhightObject{
         this.health = sHealth;
         staticVelocity.add(0,-(int)(gameHeight*0.2f));
         this.registerBodyHealth(sHealth,(float)getOption("width"),2f);
+        this.registerDropResources();
     }
 
 }

@@ -1,6 +1,6 @@
 package com.starfight.gameObject;
 
-import com.badlogic.gdx.Gdx;
+
 import com.starfight.object.FhightObject;
 
 import java.util.ArrayList;

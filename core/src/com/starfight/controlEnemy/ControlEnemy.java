@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Intersector;
 import com.starfight.gameObject.PlayerShip;
 import com.starfight.gameObject.StaticAttack;
+import com.starfight.gameObject.enemies.DropSpares;
 import com.starfight.gameObject.enemies.EnemyV1;
 import com.starfight.object.FhightObject;
 
@@ -14,7 +15,9 @@ public class ControlEnemy {
     private PlayerShip player;
     private int gameWidth;
     private int gameHeight;
+    private ArrayList<DropSpares> listSpares;
     public ControlEnemy(PlayerShip player,float gameWidth,float gameHeight){
+        listSpares = new ArrayList<DropSpares>();
         int count = 3;
         listEnemies = new ArrayList<EnemyV1>();
         int nextPositX = (int)(gameWidth*0.10);
@@ -39,6 +42,9 @@ public class ControlEnemy {
     public ArrayList getListEnemies(){
         return this.listEnemies;
     }
+    public ArrayList getListSpares(){
+        return listSpares;
+    }
     public void update(float delta){
         int size = listEnemies.size();
         if(size == 0){//TODO: Delete this exception after testing
@@ -54,6 +60,10 @@ public class ControlEnemy {
                 if(ControlCollision.collision(enemy,listAttack.get(j))){
                     enemy.setDamage(listAttack.get(j).getToDamage());
                     if(enemy.getObjectStatus() == false){
+                        ArrayList<DropSpares> dieEnemySpares = enemy.getListSpares();
+                        for (DropSpares enemySpar:dieEnemySpares){
+                            listSpares.add(enemySpar);
+                        }
                         removeEnemy = true;
                     }
                     listAttack.remove(j);

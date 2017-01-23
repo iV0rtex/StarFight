@@ -14,6 +14,7 @@ import com.starfight.assets.AssetsLoader;
 import com.starfight.controlEnemy.ControlEnemy;
 import com.starfight.gameObject.PlayerShip;
 import com.starfight.gameObject.StaticAttack;
+import com.starfight.gameObject.enemies.DropSpares;
 import com.starfight.gameObject.enemies.EnemyV1;
 
 import java.util.ArrayList;
@@ -59,12 +60,18 @@ public class GameRander {
             batch.draw(userplain,ship.position.x,ship.position.y,ship.getOption("width"),ship.getOption("height"));
         }
         ArrayList<EnemyV1> listEnemies = enemies.getListEnemies();
+
         for (EnemyV1 enemy : listEnemies){
             batch.draw(assets.enemyplain,enemy.position.x,enemy.position.y,enemy.getOption("width"),enemy.getOption("height"));
         }
         batch.end();
+        ArrayList<DropSpares> listSpares = enemies.getListSpares();
 
         this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        this.shapeRenderer.setColor(0.21568628F, 0.3137255F, 0.39215687F, 1.0F);
+        for (DropSpares enemySpares : listSpares){
+            this.shapeRenderer.circle(enemySpares.getBody().x,enemySpares.getBody().y,enemySpares.getBody().radius);
+        }
         this.shapeRenderer.setColor(0.21568628F, 0.3137255F, 0.39215687F, 1.0F);
         for (EnemyV1 enemy : listEnemies){
             Rectangle healthBody = enemy.getHealthBody().getBody();

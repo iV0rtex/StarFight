@@ -1,9 +1,14 @@
 package com.starfight.object;
 
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.starfight.gameObject.enemies.DropSpares;
 import com.starfight.healthObject.HealthObjects;
 import com.starfight.object.objInterface.FhightInterface;
+import java.util.ArrayList;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -22,6 +27,7 @@ public abstract class FhightObject implements FhightInterface{
     protected HealthObjects healthBody;
     protected boolean dropResources = false;
     private boolean registeredBodyHealth = false;
+    protected ArrayList<DropSpares> spares;
     protected FhightObject(){
         option = new Hashtable<String, Integer>();
         body = new Rectangle();
@@ -66,6 +72,13 @@ public abstract class FhightObject implements FhightInterface{
         this.setHealth(damage);
     }
     public void die(){
+        if(dropResources){
+            int randomPositX = (int)MathUtils.random(this.position.x,getOption("width"));
+            int randomPositY = (int)MathUtils.random(this.position.y,getOption("height"));
+            for(DropSpares spar : spares){
+                spar.setPosition(randomPositX,randomPositY, (Gdx.graphics.getHeight()/Gdx.graphics.getWidth())*3f);
+            }
+        }
         status = false;
     }
     public boolean getObjectStatus(){
@@ -84,8 +97,32 @@ public abstract class FhightObject implements FhightInterface{
         registeredBodyHealth = true;
         return registeredBodyHealth;
     }
+    public boolean registerDropResources(){
+        int randomDrop = MathUtils.random(1,3);
+        int sum = 1000;//TODO: This sum should be dynamic.
+        int settedSum = 0;
+        spares = new ArrayList<DropSpares>();
+        for(int i = 0;i<=randomDrop;i++){
+            int randomSum = 0;
+            if(i != randomDrop){
+                randomSum= MathUtils.random(1,sum-settedSum-2);
 
+            }else{
+                randomSum= sum-settedSum;
+            }
+            settedSum += randomSum;
+
+            spares.add(new DropSpares(randomSum));
+
+        }
+
+        dropResources = true;
+        return dropResources;
+    }
     public void setScalarDamage(int d){
         this.scalarDamage = d;
+    }
+    public ArrayList getListSpares(){
+        return spares;
     }
 }
