@@ -1,6 +1,5 @@
 package com.starfight.controlEnemy;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Intersector;
 import com.starfight.gameObject.PlayerShip;
 import com.starfight.gameObject.StaticAttack;
@@ -12,10 +11,11 @@ import java.util.ArrayList;
 
 public class ControlEnemy {
     private ArrayList<EnemyV1> listEnemies;
+    private ArrayList<DropSpares> listSpares;
     private PlayerShip player;
     private int gameWidth;
     private int gameHeight;
-    private ArrayList<DropSpares> listSpares;
+
     public ControlEnemy(PlayerShip player,float gameWidth,float gameHeight){
         listSpares = new ArrayList<DropSpares>();
         int count = 3;
@@ -47,13 +47,24 @@ public class ControlEnemy {
     }
     public void update(float delta){
         int size = listEnemies.size();
+        int sizeSpar = listSpares.size();
         if(size == 0){//TODO: Delete this exception after testing
             temporalityFunction();
+        }
+        for (int i = 0;i < sizeSpar;i++){
+            listSpares.get(i).update(delta);
+            DropSpares spar = listSpares.get(i);
+            if(spar.getBody().y + spar.getBody().radius < 0){
+                listSpares.remove(i);
+                i--;
+                sizeSpar--;
+            }
         }
         for(int i = 0;i < size;i++){
             EnemyV1 enemy = listEnemies.get(i);
             boolean removeEnemy = false;
             enemy.update(delta);
+
             ArrayList<StaticAttack> listAttack = player.getListAttack();
             int sizeAttack = listAttack.size();
             for(int j = 0; j < sizeAttack;j++){
@@ -67,8 +78,6 @@ public class ControlEnemy {
                         removeEnemy = true;
                     }
                     listAttack.remove(j);
-                    //j--;
-                    //sizeAttack--;
                     break;
                 }
 

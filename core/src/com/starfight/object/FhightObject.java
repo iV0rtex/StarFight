@@ -73,10 +73,27 @@ public abstract class FhightObject implements FhightInterface{
     }
     public void die(){
         if(dropResources){
-            int randomPositX = (int)MathUtils.random(this.position.x,getOption("width"));
-            int randomPositY = (int)MathUtils.random(this.position.y,getOption("height"));
+
             for(DropSpares spar : spares){
-                spar.setPosition(randomPositX,randomPositY, (Gdx.graphics.getHeight()/Gdx.graphics.getWidth())*3f);
+                int toRandomValFrom = (int)(this.position.x - (getOption("width")/2));
+                if(toRandomValFrom < 0){
+                    toRandomValFrom = 1;
+                }
+                int toRandomValTo = (int)((this.position.x+getOption("width")) + (getOption("width")/2));
+                if(toRandomValTo > Gdx.graphics.getWidth()){
+                    toRandomValTo = Gdx.graphics.getWidth();
+                }
+                int randomPositX = (int)MathUtils.random(toRandomValFrom,toRandomValTo);
+                toRandomValFrom = (int)(this.position.y - (getOption("height")/2));
+                if(toRandomValFrom < 0){
+                    toRandomValFrom = 1;
+                }
+                toRandomValTo = (int)((this.position.y+getOption("height")) + (getOption("height")/2));
+                if(toRandomValTo > Gdx.graphics.getHeight()){
+                    toRandomValTo = Gdx.graphics.getHeight();
+                }
+                int randomPositY = (int)MathUtils.random(toRandomValFrom,toRandomValTo);
+                spar.setPosition(randomPositX,randomPositY, (Gdx.graphics.getHeight()/2)*0.008f);
             }
         }
         status = false;
@@ -102,10 +119,11 @@ public abstract class FhightObject implements FhightInterface{
         int sum = 1000;//TODO: This sum should be dynamic.
         int settedSum = 0;
         spares = new ArrayList<DropSpares>();
-        for(int i = 0;i<=randomDrop;i++){
+        for(int i = 0;i<randomDrop;i++){
             int randomSum = 0;
-            if(i != randomDrop){
-                randomSum= MathUtils.random(1,sum-settedSum-2);
+            if(i+1 != randomDrop){
+                randomSum= MathUtils.random(3,sum-settedSum);
+                randomSum -= 2;
 
             }else{
                 randomSum= sum-settedSum;
