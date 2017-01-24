@@ -27,4 +27,7 @@ public class DropSpares {
         this.body.x += newPosit.x;
         this.body.y += newPosit.y;
     }
+    public int getSum(){
+        return randomSum;
+    }
 }

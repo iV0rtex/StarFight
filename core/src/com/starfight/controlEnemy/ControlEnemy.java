@@ -52,9 +52,17 @@ public class ControlEnemy {
             temporalityFunction();
         }
         for (int i = 0;i < sizeSpar;i++){
+            boolean removeSpar = false;
             listSpares.get(i).update(delta);
             DropSpares spar = listSpares.get(i);
-            if(spar.getBody().y + spar.getBody().radius < 0){
+            if(ControlCollision.collision(spar,player)){
+                player.setScore(spar.getSum());
+                removeSpar = true;
+            }else if(spar.getBody().y + spar.getBody().radius < 0){
+                removeSpar = true;
+            }
+
+            if(removeSpar){
                 listSpares.remove(i);
                 i--;
                 sizeSpar--;
@@ -101,8 +109,16 @@ public class ControlEnemy {
     }
     static private class ControlCollision{
         static private boolean collision (FhightObject obj1, FhightObject obj2){
-            if(obj1.position.y < obj2.position.y && obj1.position.y+obj1.getOption("height") > obj2.position.y){
+            if(obj1.position.y < obj2.position.y + obj2.getOption("height")&& obj1.position.y+obj1.getOption("height") > obj2.position.y){
                 return Intersector.overlaps(obj1.body,obj2.body);
+            }else{
+                return false;
+            }
+
+        }
+        static private boolean collision (DropSpares obj1, FhightObject obj2){
+            if(obj1.getBody().y-obj1.getBody().radius < obj2.position.y+ obj2.getOption("height") && obj1.getBody().y+obj1.getBody().radius > obj2.position.y){
+                return Intersector.overlaps(obj1.getBody(),obj2.body);
             }else{
                 return false;
             }

@@ -1,6 +1,7 @@
 package com.starfight.gameObject;
 
 
+import com.badlogic.gdx.Gdx;
 import com.starfight.object.FhightObject;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class PlayerShip extends FhightObject{
     private int gameWidth;
     private int gameHeight;
     private int midPointX;
+    private int score = 0;
     public PlayerShip(int midPointX,float gameWidth,float gameHeight) {
         this.midPointX = midPointX;
         this.gameWidth = (int)gameWidth;
@@ -88,6 +90,10 @@ public class PlayerShip extends FhightObject{
             rout = "noOne";
         }
 
+    }
+    public void setScore(int score){
+        this.score += score;
+        Gdx.app.log("SCORE",this.score+"");
     }
 
 }
