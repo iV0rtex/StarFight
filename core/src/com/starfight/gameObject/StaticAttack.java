@@ -6,7 +6,7 @@ import com.starfight.object.FhightObject;
 public class StaticAttack extends FhightObject{
     private int gameWidth;
     private int gameHeight;
-    StaticAttack(float x, float y,int gameWidth,int gameHeight){
+    public StaticAttack(float x, float y,int gameWidth,int gameHeight){
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
         body.set( x, y,(float) getOption("width"),(float) getOption("height"));

@@ -1,32 +1,28 @@
 package com.starfight.gameObject.enemies;
 
-import com.starfight.object.FhightObject;
+import com.starfight.object.FightObject;
 
 
-public class EnemyV1 extends FhightObject{
-    private int sHealth = 4;
-    private int gameWidth,gameHeight;
-    public EnemyV1(int x,int y,int gameWidth,int gameHeight){
-        this.gameWidth = gameWidth;
-        this.gameHeight = gameHeight;
-        this.setAllOptions(sHealth);
-        body.set((float) x,(float) y,(float) getOption("width"),(float) getOption("height"));
-        position.add(x - (this.getOption("width")/2.0f),y);
+public class EnemyV1 extends FightObject {
+    public EnemyV1(float x,float y,int gameWidth,int gameHeight){
+        this.setAllOptions(4,(int)(gameWidth*0.09f),(int)(getOption("width")*1.4),gameWidth,gameHeight,x,y);
     }
 
     @Override
-    public void attack() {
+    public void setAllOptions(int health,int widthObj,int heightObj,int gameWidth, int gameHeight,float positX,float positY) {
+        this.setSizeGame("width",gameWidth);
+        this.setSizeGame("height",gameHeight);
 
-    }
+        this.setOption("width",widthObj);
+        this.setOption("height",heightObj);
 
-    @Override
-    public void setAllOptions(int health) {
-        option.put("width",(int)(gameWidth*0.09f));
-        option.put("height",(int)(option.get("width")*1.4));
-        this.health = sHealth;
+        this.setHealth(health);
         staticVelocity.add(0,-(int)(gameHeight*0.2f));
-        this.registerBodyHealth(sHealth,(float)getOption("width"),2f);
+        this.registerBodyHealth(health,(float)getOption("width"),2f);
         this.registerDropResources();
+        this.getBody().set(positX, positY,(float) getOption("width"),(float) getOption("height"));
+        position.set(positX,positY);
+        this.fSettedAllOptions();
     }
 
 }

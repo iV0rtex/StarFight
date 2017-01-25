@@ -6,6 +6,7 @@ import com.starfight.gameObject.StaticAttack;
 import com.starfight.gameObject.enemies.DropSpares;
 import com.starfight.gameObject.enemies.EnemyV1;
 import com.starfight.object.FhightObject;
+import com.starfight.object.FightObject;
 
 import java.util.ArrayList;
 
@@ -108,9 +109,9 @@ public class ControlEnemy {
         }
     }
     static private class ControlCollision{
-        static private boolean collision (FhightObject obj1, FhightObject obj2){
+        static private boolean collision (FightObject obj1, FhightObject obj2){
             if(obj1.position.y < obj2.position.y + obj2.getOption("height")&& obj1.position.y+obj1.getOption("height") > obj2.position.y){
-                return Intersector.overlaps(obj1.body,obj2.body);
+                return Intersector.overlaps(obj1.getBody(),obj2.body);
             }else{
                 return false;
             }
