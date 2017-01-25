@@ -1,11 +1,11 @@
 package com.starfight.gameObject;
 
 
-import com.badlogic.gdx.Gdx;
+
 import com.starfight.object.FhightObject;
 
 import java.util.ArrayList;
-
+//TODO: This is class should be rewrite to the new structure, and extends FightObject class.
 public class PlayerShip extends FhightObject{
     private String rout;
     private ArrayList<StaticAttack> attacks;
@@ -93,7 +93,6 @@ public class PlayerShip extends FhightObject{
     }
     public void setScore(int score){
         this.score += score;
-        Gdx.app.log("SCORE",this.score+"");
     }
 
 }

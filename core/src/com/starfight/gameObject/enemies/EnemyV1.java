@@ -5,7 +5,7 @@ import com.starfight.object.FightObject;
 
 public class EnemyV1 extends FightObject {
     public EnemyV1(float x,float y,int gameWidth,int gameHeight){
-        this.setAllOptions(4,(int)(gameWidth*0.09f),(int)(getOption("width")*1.4),gameWidth,gameHeight,x,y);
+        this.setAllOptions(4,(int)(gameWidth*0.09f),(int)((gameWidth*0.09f)*1.4),gameWidth,gameHeight,x,y);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class EnemyV1 extends FightObject {
         this.registerBodyHealth(health,(float)getOption("width"),2f);
         this.registerDropResources();
         this.getBody().set(positX, positY,(float) getOption("width"),(float) getOption("height"));
-        position.set(positX,positY);
+        position.add(positX-(this.getOption("width")/2.0f),positY);
         this.fSettedAllOptions();
     }
 

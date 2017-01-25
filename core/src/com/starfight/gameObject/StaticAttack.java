@@ -1,30 +1,30 @@
 package com.starfight.gameObject;
 
 
-import com.starfight.object.FhightObject;
 
-public class StaticAttack extends FhightObject{
-    private int gameWidth;
-    private int gameHeight;
+import com.starfight.object.FightObject;
+
+public class StaticAttack extends FightObject{
+
     public StaticAttack(float x, float y,int gameWidth,int gameHeight){
-        this.gameWidth = gameWidth;
-        this.gameHeight = gameHeight;
-        body.set( x, y,(float) getOption("width"),(float) getOption("height"));
-        position.set(x - (this.getOption("width")/2.0f),y);
-        this.setAllOptions(1);
+        this.setAllOptions(1,(int)(gameWidth*0.01f),(int)((gameWidth*0.01f)*2),gameWidth,gameHeight,x,y);
     }
 
     @Override
-    public void attack() {
+    public void setAllOptions(int health,int widthObj,int heightObj,int gameWidth, int gameHeight,float positX,float positY) {
+        this.setSizeGame("width",gameWidth);
+        this.setSizeGame("height",gameHeight);
 
-    }
+        this.setOption("width",widthObj);
+        this.setOption("height",heightObj);
 
-    @Override
-    public void setAllOptions(int health) {
-        this.health = health;
-        option.put("width",(int)(gameWidth*0.01f));
-        option.put("height",(int)(option.get("width")*2));
+        this.setHealth(health);
         staticVelocity.add(0,(int)(gameHeight*0.3f));
+        this.registerBodyHealth(health,(float)getOption("width"),2f);
+        this.registerDropResources();
+        this.getBody().set(positX, positY,(float) getOption("width"),(float) getOption("height"));
+        position.add(positX-(this.getOption("width")/2.0f),positY);
+        this.fSettedAllOptions();
     }
 
 }
