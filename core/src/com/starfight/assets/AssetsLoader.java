@@ -14,6 +14,8 @@ public class AssetsLoader extends AssetManager {
         this.load("data/userplain.png",Texture.class);
         this.load("data/enemyplain.jpg",Texture.class);
         this.load("data/screenSlowMenu.png",Texture.class);
+        this.load("data/pauseUp.png",Texture.class);
+        this.load("data/pauseDown.jpg",Texture.class);
         this.finishLoading();
         enemyplain = new TextureRegion((Texture) this.get("data/enemyplain.jpg"), 0, 0, 470, 450);
         sprite = new Sprite((Texture) this.get("data/screenSlowMenu.png"));

@@ -22,7 +22,7 @@ public class GameScreen implements Screen {
         cam = new OrthographicCamera();
         cam.setToOrtho(false, gameWidth, gameHeight);
         int midPointX = (int)(gameWidth / 2.0F);
-        world = new GameWorld(midPointX,gameWidth,gameHeight);
+        world = new GameWorld(midPointX,gameWidth,gameHeight,assets);
         Gdx.input.setInputProcessor(new InputHandler(world,screenWidth/gameWidth,cam));
         rander = new GameRander(this.world,cam,assets,gameWidth,gameHeight);
     }

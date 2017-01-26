@@ -14,6 +14,7 @@ import com.starfight.gameObject.PlayerShip;
 import com.starfight.gameObject.StaticAttack;
 import com.starfight.gameObject.enemies.DropSpares;
 import com.starfight.gameObject.enemies.EnemyV1;
+import com.starfight.ui.simpleButton.circleButton;
 
 import java.util.ArrayList;
 
@@ -96,6 +97,10 @@ public class GameRander {
         assets.sprite.setPosition(0,0);
         batch.begin();
         assets.sprite.draw(batch);
+        ArrayList<circleButton> buttonList = world.getMenuSlow().getButtonList();
+        for (circleButton button : buttonList){
+            batch.draw(button.getButtonUp(),button.getBody().x,button.getBody().y,button.getBody().radius,button.getBody().radius);
+        }
         batch.end();
     }
     private void renderBG(float delta){
