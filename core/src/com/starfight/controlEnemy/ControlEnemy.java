@@ -5,7 +5,6 @@ import com.starfight.gameObject.PlayerShip;
 import com.starfight.gameObject.StaticAttack;
 import com.starfight.gameObject.enemies.DropSpares;
 import com.starfight.gameObject.enemies.EnemyV1;
-import com.starfight.object.FhightObject;
 import com.starfight.object.FightObject;
 
 import java.util.ArrayList;
