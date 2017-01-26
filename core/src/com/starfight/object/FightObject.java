@@ -66,7 +66,7 @@ public abstract class FightObject implements ObjectInterface{
             healthBody.setPosit(position.x,position.y+option.get("height")+2);
         }
         if(attackRegistered){
-            this.attack();
+            this.attack(delta);
         }
     }
     public void setHealth(int val){
@@ -161,13 +161,26 @@ public abstract class FightObject implements ObjectInterface{
         this.speedAttack = speedAttack;
         attackRegistered = true;
     }
-    public void attack() {
+    public void attack(float delta) {
+        this.timeAttack += delta;
         if(timeAttack >= speedAttack){
             attacks.add(new StaticAttack(position.x + (this.getOption("width")/2.0f),position.y+this.getOption("height"),sizeGame.get("width"),sizeGame.get("height")));
             timeAttack = 0;
         }
+        int size = attacks.size();
+        for (int i =0; i< size;i++){
+            StaticAttack attack = attacks.get(i);
+            attack.update(delta);
+            if(attack.position.y > sizeGame.get("height") || attack.position.y < 0){
+                attacks.remove(i);
+                i--;
+                size--;
+            }
+        }
     }
-
+    public ArrayList getListAttack(){
+        return attacks;
+    }
 
 
 }

@@ -1,80 +1,48 @@
 package com.starfight.gameObject;
 
+import com.starfight.object.FightObject;
 
-
-import com.starfight.object.FhightObject;
-
-import java.util.ArrayList;
-//TODO: This is class should be rewrite to the new structure, and extends FightObject class.
-public class PlayerShip extends FhightObject{
+public class PlayerShip extends FightObject{
     private String rout;
-    private ArrayList<StaticAttack> attacks;
     private float nextPosit = 0;
-    private int gameWidth;
-    private int gameHeight;
-    private int midPointX;
     private int score = 0;
     public PlayerShip(int midPointX,float gameWidth,float gameHeight) {
-        this.midPointX = midPointX;
-        this.gameWidth = (int)gameWidth;
-        this.gameHeight = (int)gameHeight;
-        this.setAllOptions(4);
+        this.setAllOptions(4,(int)(gameWidth*0.11f),(int)((gameWidth*0.11f)*1.4f),(int)gameWidth,(int)gameHeight,(int)(midPointX - ((gameWidth*0.11f)/2.0f)),3);
     }
 
     @Override
     public void update(float delta) {
         this.position.add(this.velocity.cpy().scl(delta));
-        body.set(position.x,position.y,(float) getOption("width"),(float) getOption("height"));
-        if(rout.equals("right") && (position.x + (this.option.get("width")/2)) >= nextPosit){
+        this.getBody().set(position.x,position.y,(float) getOption("width"),(float) getOption("height"));
+        if(rout.equals("right") && (position.x + (this.getOption("width")/2)) >= nextPosit){
             velocity.x = 0;
-        }else if(rout.equals("left") && (position.x + (this.option.get("width")/2)) <= nextPosit){
+        }else if(rout.equals("left") && (position.x + (this.getOption("width")/2)) <= nextPosit){
             velocity.x = 0;
         }
-
-        this.timeAttack += delta;
-        this.attack();
-        int size = attacks.size();
-        for (int i =0; i< size;i++){
-            StaticAttack attack = attacks.get(i);
-            attack.update(delta);
-            if(attack.position.y > gameHeight){
-                attacks.remove(i);
-                i--;
-                size--;
-            }
-
-        }
+        this.attack(delta);
     }
 
     @Override
-    public void attack() {
-        if(timeAttack >= speedAttack){
-            attacks.add(new StaticAttack(position.x + (this.getOption("width")/2.0f),position.y+this.getOption("height"),gameWidth,gameHeight));
-            timeAttack = 0;
-        }
-    }
+    public void setAllOptions(int health,int widthObj,int heightObj,int gameWidth, int gameHeight,float positX,float positY) {
+        this.setSizeGame("width", gameWidth);
+        this.setSizeGame("height", gameHeight);
 
-    @Override
-    public void setAllOptions(int health) {
-        this.health = health;
+        this.setOption("width", widthObj);
+        this.setOption("height", heightObj);
+
+        this.setHealth(health);
+        staticVelocity.add(gameWidth * 0.5f, 0);
+        this.registerBodyHealth(health, (float) widthObj, 2f);
+        this.registerDropResources();
+        this.getBody().set(positX, positY, (float) widthObj, (float) heightObj);
+        position.add(positX, positY);
         rout = "noOne";
-        option.put("width",(int)(gameWidth*0.11f));
-        option.put("height",(int)(option.get("width")*1.4f));
-        body.set((midPointX - (this.getOption("width")/2.0f)),3f,(float) getOption("width"),(float) getOption("height"));
-        position.add((midPointX - (this.getOption("width")/2.0f)),3f);
-        attacks = new ArrayList<StaticAttack>();
-        speedAttack = 1;
-        staticVelocity.add(gameWidth*0.5f,0);
+        this.registerAttack(1);
+        this.fSettedAllOptions();
     }
-
-
-    public ArrayList getListAttack(){
-        return attacks;
-    }
-
     public void touch(float x,int upOrDown){
         if(upOrDown == 1){
-            float scalPosit = position.x+(this.getOption("width")/2.0f);
+            //float scalPosit = position.x+(this.getOption("width")/2.0f);
             if(velocity.x == 0){
                 if(x > position.x+this.getOption("width")){
                     velocity.x = staticVelocity.x;
