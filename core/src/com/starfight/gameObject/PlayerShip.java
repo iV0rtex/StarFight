@@ -1,5 +1,6 @@
 package com.starfight.gameObject;
 
+import com.badlogic.gdx.math.Vector2;
 import com.starfight.object.FightObject;
 
 public class PlayerShip extends FightObject{
@@ -11,15 +12,17 @@ public class PlayerShip extends FightObject{
     }
 
     @Override
-    public void update(float delta) {
-        this.position.add(this.velocity.cpy().scl(delta));
+    public void update(float delta,float gameSpeed) {
+        Vector2 positNext = new Vector2();
+        positNext.set(this.velocity.x * gameSpeed,this.velocity.y * gameSpeed);
+        this.position.add(positNext.cpy().scl(delta));
         this.getBody().set(position.x,position.y,(float) getOption("width"),(float) getOption("height"));
         if(rout.equals("right") && (position.x + (this.getOption("width")/2)) >= nextPosit){
             velocity.x = 0;
         }else if(rout.equals("left") && (position.x + (this.getOption("width")/2)) <= nextPosit){
             velocity.x = 0;
         }
-        this.attack(delta);
+        this.attack(delta,gameSpeed);
     }
 
     @Override

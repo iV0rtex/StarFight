@@ -22,8 +22,10 @@ public class DropSpares {
     public Circle getBody(){
         return body;
     }
-    public void update(float delta){
-        Vector2 newPosit = this.velocity.cpy().scl(delta);
+    public void update(float delta,float gameSpeed){
+        Vector2 positNext = new Vector2();
+        positNext.set(this.velocity.x * gameSpeed,this.velocity.y * gameSpeed);
+        Vector2 newPosit = positNext.cpy().scl(delta);
         this.body.x += newPosit.x;
         this.body.y += newPosit.y;
     }

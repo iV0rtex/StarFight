@@ -1,12 +1,10 @@
 package com.starfight.world;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -30,12 +28,14 @@ public class GameRander {
     private Vector2 velocityBG;
     private float gameWidth;
     private float gameHeight;
+    private GameWorld world;
     public GameRander(GameWorld world, OrthographicCamera cam, AssetsLoader assets, float gameWidth, float gameHeight){
 
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(cam.combined);
         ship = world.getPlayer();
         enemies = world.getEnemies();
+        this.world = world;
         this.cam = cam;
         this.assets = assets;
         batch = new SpriteBatch();
@@ -52,9 +52,9 @@ public class GameRander {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //this.cam.update();
         batch.begin();
-        this.batch.disableBlending();
+        //this.batch.disableBlending();
         this.renderBG(delta);
-        this.batch.enableBlending();
+        //this.batch.enableBlending();
         if(ship.getObjectStatus()){
             Texture userplain = assets.get("data/userplain.png");
             batch.draw(userplain,ship.position.x,ship.position.y,ship.getOption("width"),ship.getOption("height"));
@@ -85,7 +85,18 @@ public class GameRander {
         }
 
         this.shapeRenderer.end();
+        if (world.isSlow()){
+            renderSlowMenu();
+        }
 
+    }
+    private void renderSlowMenu(){
+        assets.sprite.setColor(1,1,1,.5f);
+        assets.sprite.setSize(this.gameWidth,this.gameHeight);
+        assets.sprite.setPosition(0,0);
+        batch.begin();
+        assets.sprite.draw(batch);
+        batch.end();
     }
     private void renderBG(float delta){
         Texture bg = assets.get("data/sky.jpg");

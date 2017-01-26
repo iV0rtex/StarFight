@@ -18,7 +18,7 @@ public abstract class FightObject implements ObjectInterface{
     public Vector2 position,velocity,staticVelocity;
     private Rectangle body;
     private int speedAttack;
-    private float timeAttack;
+    private float procentTimeAttack;
     private int health;
     private boolean status;
     private static final int staticDamage = -1;
@@ -59,14 +59,16 @@ public abstract class FightObject implements ObjectInterface{
     public HealthObjects getHealthBody(){
         return healthBody;
     }
-    public void update(float delta) {
-        this.position.add(this.staticVelocity.cpy().scl(delta));
+    public void update(float delta,float gameSpeed) {
+        Vector2 positNext = new Vector2();
+        positNext.set(this.staticVelocity.x * gameSpeed,this.staticVelocity.y * gameSpeed);
+        this.position.add(positNext.cpy().scl(delta));
         body.set(position.x,position.y,(float) getOption("width"),(float) getOption("height"));
         if(registeredBodyHealth){
             healthBody.setPosit(position.x,position.y+option.get("height")+2);
         }
         if(attackRegistered){
-            this.attack(delta);
+            this.attack(delta,gameSpeed);
         }
     }
     public void setHealth(int val){
@@ -159,18 +161,23 @@ public abstract class FightObject implements ObjectInterface{
     public void registerAttack(int speedAttack){
         attacks = new ArrayList<StaticAttack>();
         this.speedAttack = speedAttack;
+        this.procentTimeAttack = 0;
         attackRegistered = true;
+
     }
-    public void attack(float delta) {
-        this.timeAttack += delta;
-        if(timeAttack >= speedAttack){
+    public void attack(float delta,float gameSpeed) {
+        float timeAttack = (speedAttack/gameSpeed)*this.procentTimeAttack;
+        timeAttack += delta;
+        this.procentTimeAttack = timeAttack / (speedAttack/gameSpeed);
+
+        if(procentTimeAttack >= 1){
             attacks.add(new StaticAttack(position.x + (this.getOption("width")/2.0f),position.y+this.getOption("height"),sizeGame.get("width"),sizeGame.get("height")));
-            timeAttack = 0;
+            this.procentTimeAttack = 0;
         }
         int size = attacks.size();
         for (int i =0; i< size;i++){
             StaticAttack attack = attacks.get(i);
-            attack.update(delta);
+            attack.update(delta,gameSpeed);
             if(attack.position.y > sizeGame.get("height") || attack.position.y < 0){
                 attacks.remove(i);
                 i--;

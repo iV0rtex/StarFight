@@ -36,6 +36,7 @@ public class InputHandler implements InputProcessor{
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         touchPos.set(screenX,screenY,(float)0);
         cam.unproject(touchPos);
+        world.setNormalGame();
         world.touch(touchPos.x,1);
         return true;
     }
@@ -43,7 +44,7 @@ public class InputHandler implements InputProcessor{
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         touchPos.set(screenX,screenY,(float)0);
-
+        world.setSlowGame();
         cam.unproject(touchPos);
         world.touch(touchPos.x,0);
 

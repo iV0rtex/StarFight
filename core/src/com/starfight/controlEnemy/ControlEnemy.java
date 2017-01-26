@@ -45,7 +45,7 @@ public class ControlEnemy {
     public ArrayList getListSpares(){
         return listSpares;
     }
-    public void update(float delta){
+    public void update(float delta,float gameSpeed){
         int size = listEnemies.size();
         int sizeSpar = listSpares.size();
         if(size == 0){//TODO: Delete this exception after testing
@@ -53,7 +53,7 @@ public class ControlEnemy {
         }
         for (int i = 0;i < sizeSpar;i++){
             boolean removeSpar = false;
-            listSpares.get(i).update(delta);
+            listSpares.get(i).update(delta,gameSpeed);
             DropSpares spar = listSpares.get(i);
             if(ControlCollision.collision(spar,player)){
                 player.setScore(spar.getSum());
@@ -71,7 +71,7 @@ public class ControlEnemy {
         for(int i = 0;i < size;i++){
             EnemyV1 enemy = listEnemies.get(i);
             boolean removeEnemy = false;
-            enemy.update(delta);
+            enemy.update(delta,gameSpeed);
 
             ArrayList<StaticAttack> listAttack = player.getListAttack();
             int sizeAttack = listAttack.size();
@@ -90,12 +90,16 @@ public class ControlEnemy {
                 }
 
             }
-            if((enemy.position.y+enemy.getOption("height")) < 0){
+            if(!removeEnemy && (enemy.position.y+enemy.getOption("height")) < 0){
                 removeEnemy = true;
             }
-            if(ControlCollision.collision(enemy,player)){
+            if(!removeEnemy && ControlCollision.collision(enemy,player)){
                 player.setDamage(enemy.getToDamage());
                 enemy.die();
+                ArrayList<DropSpares> dieEnemySpares = enemy.getListSpares();
+                for (DropSpares enemySpar:dieEnemySpares){
+                    listSpares.add(enemySpar);
+                }
                 removeEnemy = true;
 
             }
