@@ -14,7 +14,9 @@ import com.starfight.gameObject.PlayerShip;
 import com.starfight.gameObject.StaticAttack;
 import com.starfight.gameObject.enemies.DropSpares;
 import com.starfight.gameObject.enemies.EnemyV1;
+import com.starfight.ui.MenuPause;
 import com.starfight.ui.simpleButton.circleButton;
+import com.starfight.ui.simpleButton.simpleButton;
 
 import java.util.ArrayList;
 
@@ -88,6 +90,8 @@ public class GameRander {
         this.shapeRenderer.end();
         if (world.isSlow()){
             renderSlowMenu();
+        }else if(world.isPause()){
+            renderPauseMenu();
         }
 
     }
@@ -99,7 +103,19 @@ public class GameRander {
         assets.sprite.draw(batch);
         ArrayList<circleButton> buttonList = world.getMenuSlow().getButtonList();
         for (circleButton button : buttonList){
-            batch.draw(button.getButtonUp(),button.getBody().x,button.getBody().y,button.getBody().radius,button.getBody().radius);
+            batch.draw(button.getButtonTexture(),button.getBody().x,button.getBody().y,button.getBody().radius,button.getBody().radius);
+        }
+        batch.end();
+    }
+    private void renderPauseMenu(){
+        assets.sprite.setColor(1,1,1,.5f);
+        assets.sprite.setSize(this.gameWidth,this.gameHeight);
+        assets.sprite.setPosition(0,0);
+        batch.begin();
+        assets.sprite.draw(batch);
+        ArrayList<simpleButton> buttonList = world.getMenuPause().getButtonList();
+        for (simpleButton button : buttonList){
+            batch.draw(button.getButtonTexture(),button.getBody(1).x,button.getBody(1).y,button.getBody(1).width,button.getBody(1).height);
         }
         batch.end();
     }

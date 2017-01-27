@@ -36,17 +36,30 @@ public class InputHandler implements InputProcessor{
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         touchPos.set(screenX,screenY,(float)0);
         cam.unproject(touchPos);
-        world.setNormalGame();
-        world.touch(touchPos.x,1);
+        if(world.isNormalGame()){
+            world.touch(touchPos.x,1);
+        }else if(world.isSlow()){
+            world.touchSlow(touchPos.x,touchPos.y,1);
+        }else if(world.isPause()){
+            world.touchPause(touchPos.x,touchPos.y,1);
+        }
+
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         touchPos.set(screenX,screenY,(float)0);
-        world.setSlowGame();
         cam.unproject(touchPos);
-        world.touch(touchPos.x,0);
+        if (world.isNormalGame()){
+            world.setSlowGame();
+            world.touch(touchPos.x,0);
+        }else if(world.isSlow()){
+            world.touchSlow(touchPos.x,touchPos.y,0);
+        }else if(world.isPause()){
+            world.touchPause(touchPos.x,touchPos.y,0);
+        }
+
 
         return true;
     }
@@ -55,7 +68,9 @@ public class InputHandler implements InputProcessor{
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         touchPos.set(screenX,screenY,(float)0);
        cam.unproject(touchPos);
-        world.touch(touchPos.x,1);
+        if (world.isNormalGame()){
+            world.touch(touchPos.x,1);
+        }
 
         return true;
     }
