@@ -11,6 +11,6 @@ public class MenuPause extends menuSlowGame{
     }
     @Override
     public void setButtonList(float gameWidth, float gameHeight, AssetsLoader assets){
-        buttonList.add(new simpleButton((gameWidth/2f)*.85f,gameHeight/2f,(int)((gameWidth/2) * .80f),(int)((gameHeight/2) * .80f),(Texture) assets.get("data/pauseUp.png"),(Texture) assets.get("data/pauseDown.jpg")));
+        buttonList.add(new simpleButton(((gameWidth/2f))/2f,gameHeight/2f,(int)(gameWidth/2),(int)((gameHeight/2) * .15f),(Texture) assets.get("data/backToGame.png"),(Texture) assets.get("data/backToGame.png")));
     }
 }

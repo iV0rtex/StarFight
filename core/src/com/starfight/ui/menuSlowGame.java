@@ -1,6 +1,5 @@
 package com.starfight.ui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.starfight.assets.AssetsLoader;
 import com.starfight.ui.simpleButton.circleButton;
@@ -18,7 +17,7 @@ public class menuSlowGame{
         setButtonList(gameWidth,gameHeight,assets);
     }
     public void setButtonList(float gameWidth, float gameHeight, AssetsLoader assets){
-        buttonList.add(new circleButton(gameWidth*.85f,gameHeight*.91f,(int)((gameHeight/2)*.1f),(Texture) assets.get("data/pauseUp.png"),(Texture) assets.get("data/pauseDown.jpg")));
+        buttonList.add(new circleButton(gameWidth*.85f,gameHeight*.91f,(int)((gameHeight/2)*.1f),(Texture) assets.get("data/pauseUp.png"),(Texture) assets.get("data/pauseDown.png")));
     }
     public ArrayList getButtonList(){
         return buttonList;
@@ -28,14 +27,12 @@ public class menuSlowGame{
             for(ButtonInterface button:buttonList){
                 if(button instanceof simpleButton){
                     if(button.getBody(1).contains(x,y)){
-                        Gdx.app.log("onclick","");
                         button.click(upOrDown, world);
                         buttonClicked = button;
                         return true;
                     }
                 }else{
                     if(button.getBody().contains(x,y)){
-                        Gdx.app.log("onclick","");
                         button.click(upOrDown, world);
                         buttonClicked = button;
                         return true;
