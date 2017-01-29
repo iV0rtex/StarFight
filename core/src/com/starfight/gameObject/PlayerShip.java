@@ -45,12 +45,11 @@ public class PlayerShip extends FightObject{
     }
     public void touch(float x,int upOrDown){
         if(upOrDown == 1){
-            //float scalPosit = position.x+(this.getOption("width")/2.0f);
             if(velocity.x == 0){
-                if(x > position.x+this.getOption("width")){
+                if(x > position.x+((this.getOption("width")/2)+10)){
                     velocity.x = staticVelocity.x;
                     rout = "right";
-                }else if(x<position.x){
+                }else if(x<position.x+((this.getOption("width")/2)-10)){
                     velocity.x = -staticVelocity.x;
                     rout = "left";
                 }

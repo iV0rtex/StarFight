@@ -20,11 +20,11 @@ import com.starfight.ui.simpleButton.simpleButton;
 
 import java.util.ArrayList;
 
-public class GameRander {
+public class GameRander{
+
     private ShapeRenderer shapeRenderer;
     private PlayerShip ship;
     private ControlEnemy enemies;
-    private OrthographicCamera cam;
     private AssetsLoader assets;
     private SpriteBatch batch;
     private Vector2 positionBG;
@@ -39,10 +39,9 @@ public class GameRander {
         ship = world.getPlayer();
         enemies = world.getEnemies();
         this.world = world;
-        this.cam = cam;
         this.assets = assets;
         batch = new SpriteBatch();
-        this.batch.setProjectionMatrix(this.cam.combined);
+        this.batch.setProjectionMatrix(cam.combined);
         positionBG = new Vector2();
         velocityBG = new Vector2();
         positionBG.set(0f,0f);

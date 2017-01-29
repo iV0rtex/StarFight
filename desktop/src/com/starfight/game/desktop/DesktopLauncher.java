@@ -10,6 +10,7 @@ public class DesktopLauncher {
 		config.title = "Star fight";
 		config.height = 800;
 		config.width = 480;
+		config.fullscreen = true;
 		new LwjglApplication(new StarGame(), config);
 	}
 }

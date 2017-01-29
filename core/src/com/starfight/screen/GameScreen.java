@@ -39,22 +39,21 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
     public void pause() {
-
+        //TODO: There should be logic when game is roll down
     }
 
     @Override
     public void resume() {
-
+        //TODO: There should be logic when game is roll up
     }
 
     @Override
     public void hide() {
-
+        //TODO: There should be logic when game is close;
     }
 
     @Override
