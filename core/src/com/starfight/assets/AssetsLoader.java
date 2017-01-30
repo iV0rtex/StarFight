@@ -27,9 +27,9 @@ public class AssetsLoader extends AssetManager {
         this.load("data/sky.jpg", Texture.class);
         this.load("data/userplain.png",Texture.class);
         this.finishLoading();
-        effect = new ParticleEffect();
+        /*effect = new ParticleEffect();
         effect.load(Gdx.files.internal("data/IMGTest.p"),Gdx.files.internal("data"));
-        effect.start();
+        effect.start();*/
     }
     @Override
     public synchronized void dispose (){
