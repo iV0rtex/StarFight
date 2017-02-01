@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.starfight.assets.AssetsLoader;
+import com.starfight.gameObject.PlayerShipMenu;
 
 public class MainMenuRander {
     AssetsLoader assets;
@@ -15,9 +16,9 @@ public class MainMenuRander {
     private Vector2 velocityBG;
     private float gameWidth;
     private float gameHeight;
+    private PlayerShipMenu player;
 
-
-    public MainMenuRander(AssetsLoader assets,float gameWidth, float gameHeight,OrthographicCamera cam){
+    public MainMenuRander(AssetsLoader assets, float gameWidth, float gameHeight, OrthographicCamera cam, PlayerShipMenu player){
         this.assets = assets;
         batch = new SpriteBatch();
         this.batch.setProjectionMatrix(cam.combined);
@@ -27,6 +28,7 @@ public class MainMenuRander {
         velocityBG.set(0f,-20f);
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
+        this.player = player;
         //assets.effect.setPosition(gameWidth/2,gameHeight /2);
     }
     public void render(float delta){
@@ -35,6 +37,8 @@ public class MainMenuRander {
         batch.begin();
         this.renderBG(delta);
         //assets.effect.draw(batch,delta);
+        Texture userplain = assets.get("data/userplain.png");
+        batch.draw(userplain,player.position.x,player.position.y,player.getOption("width"),player.getOption("height"));
         batch.end();
     }
     private void renderBG(float delta){

@@ -24,7 +24,7 @@ public class MainMenu implements Screen{
         int midPointX = (int)(gameWidth / 2.0F);
         int midPointY = (int)(gameHeight / 2.0F);
         this.playerShip = new PlayerShipMenu((Texture) assets.get("data/userplain.png"),midPointX,midPointY,gameWidth,gameHeight);
-        this.rander = new MainMenuRander(assets,gameWidth,gameHeight,cam);
+        this.rander = new MainMenuRander(assets,gameWidth,gameHeight,cam,this.playerShip);
 
     }
     @Override
