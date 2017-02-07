@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.starfight.assets.AssetsLoader;
@@ -14,9 +15,7 @@ import com.starfight.gameObject.PlayerShip;
 import com.starfight.gameObject.StaticAttack;
 import com.starfight.gameObject.enemies.DropSpares;
 import com.starfight.gameObject.enemies.EnemyV1;
-import com.starfight.ui.MenuPause;
 import com.starfight.ui.simpleButton.circleButton;
-import com.starfight.ui.simpleButton.simpleButton;
 
 import java.util.ArrayList;
 
@@ -102,7 +101,8 @@ public class GameRander{
         assets.sprite.draw(batch);
         ArrayList<circleButton> buttonList = world.getMenuSlow().getButtonList();
         for (circleButton button : buttonList){
-            batch.draw(button.getButtonTexture(),button.getBody().x,button.getBody().y,button.getBody().radius,button.getBody().radius);
+            Circle body = (Circle) button.getBody();
+            batch.draw(button.getButtonTexture(),body.x,body.y,body.radius,body.radius);
         }
         batch.end();
     }
@@ -112,9 +112,10 @@ public class GameRander{
         assets.sprite.setPosition(0,0);
         batch.begin();
         assets.sprite.draw(batch);
-        ArrayList<simpleButton> buttonList = world.getMenuPause().getButtonList();
-        for (simpleButton button : buttonList){
-            batch.draw(button.getButtonTexture(),button.getBody(1).x,button.getBody(1).y,button.getBody(1).width,button.getBody(1).height);
+        ArrayList<circleButton> buttonList = world.getMenuPause().getButtonList();
+        for (circleButton button : buttonList){
+            Rectangle body = (Rectangle) button.getBody();
+            batch.draw(button.getButtonTexture(),body.x,body.y,body.width,body.height);
         }
         batch.end();
     }
