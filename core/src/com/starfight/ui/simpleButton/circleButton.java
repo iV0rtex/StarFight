@@ -13,12 +13,14 @@ public class circleButton implements ButtonInterface{
     private Texture buttonDown;
     private Circle body;
     private buttonState currentState;
-    public circleButton(float x,float y,int radius,Texture buttonUp,Texture buttonDown){
+    private String returnMethod;
+    public circleButton(float x,float y,int radius,Texture buttonUp,Texture buttonDown,String returnMethod){
         body = new Circle();
         body.set(x,y,radius);
         this.buttonUp = buttonUp;
         this.buttonDown = buttonDown;
         currentState = buttonState.UP;
+        this.returnMethod = returnMethod;
     }
     @Override
     public Circle getBody(){
@@ -39,16 +41,14 @@ public class circleButton implements ButtonInterface{
 
     }
     @Override
-    public boolean click(int upOrDown, GameWorld world){
+    public String click(int upOrDown){
         if(upOrDown == 1){
             currentState = buttonState.DOWN;
-            return true;
         }else if(upOrDown == 0 && currentState == buttonState.DOWN){
             currentState = buttonState.UP;
-            world.setPause();
-
+            return this.returnMethod;
         }
-        return false;
+        return " ";
     }
     @Override
     public void setButtonUp(){

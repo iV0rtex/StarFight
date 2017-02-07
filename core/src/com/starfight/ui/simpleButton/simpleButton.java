@@ -11,12 +11,14 @@ public class simpleButton implements ButtonInterface {
     private Texture buttonUp;
     private Texture buttonDown;
     private buttonState currentState;
-    public simpleButton(float x, float y, int width,int height, Texture buttonUp, Texture buttonDown) {
+    private String returnMethod;
+    public simpleButton(float x, float y, int width,int height, Texture buttonUp, Texture buttonDown, String returnMethod) {
         body = new Rectangle();
         body.set(x,y,width,height);
         this.buttonUp = buttonUp;
         this.buttonDown = buttonDown;
         currentState = buttonState.UP;
+        this.returnMethod = returnMethod;
     }
     public Texture getButtonTexture(){
         if(currentState == buttonState.UP){
@@ -25,16 +27,14 @@ public class simpleButton implements ButtonInterface {
             return buttonDown;
         }
     }
-    public boolean click(int upOrDown, GameWorld world){
+    public String click(int upOrDown){
         if(upOrDown == 1){
             currentState = buttonState.DOWN;
-            return true;
         }else if(upOrDown == 0 && currentState == buttonState.DOWN){
             currentState = buttonState.UP;
-            world.setSlowGame();
-
+            return this.returnMethod;
         }
-        return false;
+        return " ";
     }
     public void setButtonUp(){
         currentState = buttonState.UP;

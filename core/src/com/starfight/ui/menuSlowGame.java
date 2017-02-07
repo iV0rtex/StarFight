@@ -1,5 +1,6 @@
 package com.starfight.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.starfight.assets.AssetsLoader;
 import com.starfight.ui.simpleButton.circleButton;
@@ -7,6 +8,8 @@ import com.starfight.ui.simpleButton.interfaceButt.ButtonInterface;
 import com.starfight.ui.simpleButton.simpleButton;
 import com.starfight.world.GameWorld;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class menuSlowGame{
@@ -17,7 +20,7 @@ public class menuSlowGame{
         setButtonList(gameWidth,gameHeight,assets);
     }
     public void setButtonList(float gameWidth, float gameHeight, AssetsLoader assets){
-        buttonList.add(new circleButton(gameWidth*.85f,gameHeight*.91f,(int)((gameHeight/2)*.1f),(Texture) assets.get("data/pauseUp.png"),(Texture) assets.get("data/pauseDown.png")));
+        buttonList.add(new circleButton(gameWidth*.85f,gameHeight*.91f,(int)((gameHeight/2)*.1f),(Texture) assets.get("data/pauseUp.png"),(Texture) assets.get("data/pauseDown.png"),"methodPause"));
     }
     public ArrayList getButtonList(){
         return buttonList;
@@ -27,13 +30,13 @@ public class menuSlowGame{
             for(ButtonInterface button:buttonList){
                 if(button instanceof simpleButton){
                     if(button.getBody(1).contains(x,y)){
-                        button.click(upOrDown, world);
+                       this.eventClick(button.click(upOrDown),world);
                         buttonClicked = button;
                         return true;
                     }
                 }else{
                     if(button.getBody().contains(x,y)){
-                        button.click(upOrDown, world);
+                        this.eventClick(button.click(upOrDown),world);
                         buttonClicked = button;
                         return true;
                     }
@@ -42,13 +45,13 @@ public class menuSlowGame{
         }else{
             if(buttonClicked instanceof simpleButton){
                 if(buttonClicked.getBody(1).contains(x,y)){
-                    buttonClicked.click(upOrDown, world);
+                    this.eventClick(buttonClicked.click(upOrDown),world);
                 }else{
                     buttonClicked.setButtonUp();
                 }
             }else{
                 if(buttonClicked.getBody().contains(x,y)){
-                    buttonClicked.click(upOrDown, world);
+                    this.eventClick(buttonClicked.click(upOrDown),world);
                 }else{
                     buttonClicked.setButtonUp();
                 }
@@ -59,5 +62,27 @@ public class menuSlowGame{
         }
 
         return false;
+    }
+    private void eventClick(String var,GameWorld world){
+        if(!var.equals(" ")){
+            Method clickedButtMethod;
+            try {
+                clickedButtMethod = this.getClass().getMethod(var,world.getClass());
+                clickedButtMethod.invoke(this,world);
+            }catch (NoSuchMethodException e){
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+    public void methodPause(GameWorld world){
+        world.setPause();
+    }
+    public void methodSlow(GameWorld world){
+        world.setSlowGame();
     }
 }

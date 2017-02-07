@@ -7,6 +7,6 @@ import com.starfight.world.GameWorld;
 public interface ButtonInterface  {
     Circle getBody();
     Rectangle getBody(int e);
-    boolean click(int upOrDown, GameWorld world);
+    String click(int upOrDown);
     void setButtonUp();
 }
