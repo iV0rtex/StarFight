@@ -17,10 +17,11 @@ public class GameScreen implements Screen {
     public GameScreen(AssetsLoader assets){
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
-        float gameWidth = 480;
-        float gameHeight = 800;
+        float gameWidth = screenWidth;
+        float gameHeight = screenHeight;
         cam = new OrthographicCamera();
         cam.setToOrtho(false, gameWidth, gameHeight);
+
         int midPointX = (int)(gameWidth / 2.0F);
         world = new GameWorld(midPointX,gameWidth,gameHeight,assets);
         Gdx.input.setInputProcessor(new InputHandler(world,screenWidth/gameWidth,cam));
