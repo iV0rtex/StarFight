@@ -9,11 +9,11 @@ public class StarGame extends Game {
 	private StatusGameScreen status;
 	@Override
 	public void create() {
-		createScreenGame();
-		/*status = StatusGameScreen.MAIN;
+		//createScreenGame();
+		status = StatusGameScreen.MAIN;
 		AssetsLoader Loader = new AssetsLoader();
 		Loader.loadMainMenu();
-		this.setScreen(new MainMenu(Loader));*/
+		this.setScreen(new MainMenu(Loader));
 	}
 	public void createScreenGame(){
 		status = StatusGameScreen.GAME;

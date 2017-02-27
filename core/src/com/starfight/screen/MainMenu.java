@@ -39,7 +39,7 @@ public class MainMenu<T> implements Screen{
         int midPointY = (int)(gameHeight / 2.0F);
         this.createMenu();
         this.playerShip = new PlayerShipMenu((Texture) assets.get("data/userplain.png"),midPointX,midPointY,0,gameWidth,gameHeight);
-        this.rander = new MainMenuRander(assets,gameWidth,gameHeight,cam,this.playerShip,this.divLeft,this.divRight);
+        this.rander = new MainMenuRander(assets,gameWidth,gameHeight,cam,this.playerShip,this.divLeft,this.divRight,MenuNow);
     }
     @Override
     public void show() {
@@ -51,6 +51,10 @@ public class MainMenu<T> implements Screen{
     public void render(float delta) {
         playerShip.setPosit(delta);
         this.divSetPosit(delta);
+        if(MenuNow instanceof MainMenuLevel1){
+            MainMenuLevel1 menuNow = (MainMenuLevel1) MenuNow;
+            menuNow.updateButtons(delta,-1);
+        }
         rander.render(delta);
     }
     private void divSetPosit(float delta){

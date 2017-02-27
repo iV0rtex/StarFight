@@ -57,6 +57,10 @@ public class circleButton<T> implements ButtonInterface<T>{
         return " ";
     }
     @Override
+    public String getMethod(){
+        return this.returnMethod;
+    }
+    @Override
     public void setButtonUp(){
         currentState = buttonState.UP;
     }
