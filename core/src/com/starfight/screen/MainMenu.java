@@ -8,9 +8,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.starfight.assets.AssetsLoader;
 import com.starfight.gameObject.PlayerShipMenu;
+import com.starfight.ui.MainMenuLevel1;
 import com.starfight.world.MainMenuRander;
 
-public class MainMenu implements Screen{
+public class MainMenu<T> implements Screen{
     private OrthographicCamera cam;
     private AssetsLoader assets;
     private MainMenuRander rander;
@@ -21,6 +22,7 @@ public class MainMenu implements Screen{
     private Rectangle divLeft;
     private Vector2 newPosit;
     private float gameWidth,gameHeight;
+    private T MenuNow;
     public MainMenu(AssetsLoader assets){
         newPosit = new Vector2();
         status = MenuStatus.LAVEL1;
@@ -84,6 +86,7 @@ public class MainMenu implements Screen{
         float widthDiv =  gameWidth*.35f;
         divRight.set(gameWidth,0,widthDiv,gameHeight);
         divLeft.set(0-widthDiv,0,widthDiv,gameHeight);
+        MenuNow = (T) new MainMenuLevel1(gameWidth,gameHeight,assets,divRight,divLeft);
     }
     @Override
     public void resize(int width, int height) {
