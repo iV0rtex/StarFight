@@ -28,7 +28,8 @@ public class AssetsLoader extends AssetManager {
         this.load("data/userplain.png",Texture.class);
         this.load("data/pauseUp.png",Texture.class);
         this.load("data/pauseDown.png",Texture.class);
-        this.load("data/backToGame.png",Texture.class);
+        this.load("data/SetMenuLevels.png",Texture.class);
+        this.load("data/toGarage.png",Texture.class);
         this.finishLoading();
         /*effect = new ParticleEffect();
         effect.load(Gdx.files.internal("data/IMGTest.p"),Gdx.files.internal("data"));

@@ -49,9 +49,10 @@ public class MainMenu<T> implements Screen{
 
     @Override
     public void render(float delta) {
-        playerShip.setPosit(delta);
+
         this.divSetPosit(delta);
         if(MenuNow instanceof MainMenuLevel1){
+            playerShip.setPosit(delta);
             MainMenuLevel1 menuNow = (MainMenuLevel1) MenuNow;
             menuNow.updateButtons(delta,-1);
         }
