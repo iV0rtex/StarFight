@@ -14,7 +14,7 @@ public class GameScreen implements Screen {
     private GameWorld world;
     private GameRander rander;
     private OrthographicCamera cam;
-    public GameScreen(AssetsLoader assets){
+    public GameScreen(AssetsLoader assets,InputHandler controlInput){
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
         float gameWidth = screenWidth;
@@ -24,7 +24,8 @@ public class GameScreen implements Screen {
 
         int midPointX = (int)(gameWidth / 2.0F);
         world = new GameWorld(midPointX,gameWidth,gameHeight,assets);
-        Gdx.input.setInputProcessor(new InputHandler(world,screenWidth/gameWidth,cam));
+        controlInput.setConfig(world,screenWidth/gameWidth,cam);
+        Gdx.input.setInputProcessor(controlInput);
         rander = new GameRander(this.world,cam,assets,gameWidth,gameHeight);
     }
     @Override

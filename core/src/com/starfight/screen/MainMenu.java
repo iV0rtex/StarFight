@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.starfight.StarHelpers.InputHandler;
 import com.starfight.assets.AssetsLoader;
 import com.starfight.gameObject.PlayerShipMenu;
 import com.starfight.ui.MainMenuLevel1;
@@ -23,7 +24,7 @@ public class MainMenu<T> implements Screen{
     private Vector2 newPosit;
     private float gameWidth,gameHeight;
     private T MenuNow;
-    public MainMenu(AssetsLoader assets){
+    public MainMenu(AssetsLoader assets,InputHandler controlInput){
         newPosit = new Vector2();
         status = MenuStatus.LAVEL1;
         statusSlide = MenuStatusSlide.OPEN;
@@ -34,7 +35,8 @@ public class MainMenu<T> implements Screen{
         this.gameHeight = screenHeight;
         cam = new OrthographicCamera();
         cam.setToOrtho(false, gameWidth, gameHeight);
-
+        controlInput.setConfig(this,screenWidth/gameWidth,cam);
+        Gdx.input.setInputProcessor(controlInput);
         int midPointX = (int)(gameWidth / 2.0F);
         int midPointY = (int)(gameHeight / 2.0F);
         this.createMenu();
@@ -54,7 +56,7 @@ public class MainMenu<T> implements Screen{
         if(MenuNow instanceof MainMenuLevel1){
             playerShip.setPosit(delta);
             MainMenuLevel1 menuNow = (MainMenuLevel1) MenuNow;
-            menuNow.updateButtons(delta,-1);
+            menuNow.updateButtons(0,0,-1,this);
         }
         rander.render(delta);
     }
@@ -79,6 +81,10 @@ public class MainMenu<T> implements Screen{
                 statusSlide = MenuStatusSlide.STOP;
             }
         }
+    }
+    public void touch(float x,float y,int upOrDown){
+        MainMenuLevel1 menuNow = (MainMenuLevel1) MenuNow;
+        menuNow.updateButtons(x,y,upOrDown,this);
     }
     private void createMenu(){
         if(status == MenuStatus.LAVEL1){
@@ -116,6 +122,9 @@ public class MainMenu<T> implements Screen{
     @Override
     public void dispose() {
 
+    }
+    public boolean isLevel1(){
+        return status == status.LAVEL1;
     }
     public enum MenuStatus{
         LAVEL1
